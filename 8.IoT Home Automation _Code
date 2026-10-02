@@ -1,1 +1,43 @@
+// Define the Arduino digital pin connected to the relay module
+#define RELAY_PIN 8
 
+void setup()
+{
+  // Set relay pin as an OUTPUT
+  // This allows the Arduino to control the relay
+  pinMode(RELAY_PIN, OUTPUT);
+
+  // Start serial communication at 9600 baud rate
+  // This allows us to send commands from the Serial Monitor
+  Serial.begin(9600);
+
+  // Initially keep the relay OFF
+  // LOW = Relay OFF for this program
+  digitalWrite(RELAY_PIN, LOW);
+}
+
+void loop()
+{
+  // Check if any data/character is received through Serial
+  if (Serial.available())
+  {
+    // Read the received character and store it in 'data'
+    char data = Serial.read();
+
+    // If the received character is '1'
+    if (data == '1')
+    {
+      // Turn the relay ON
+      // HIGH sends 5V to the relay control pin
+      digitalWrite(RELAY_PIN, HIGH);
+    }
+
+    // If the received character is '2'
+    if (data == '2')
+    {
+      // Turn the relay OFF
+      // LOW sends 0V to the relay control pin
+      digitalWrite(RELAY_PIN, LOW);
+    }
+  }
+}
